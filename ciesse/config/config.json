@@ -1,0 +1,27 @@
+{
+    "dev_sitelist": {
+      "api_url": "https://imbapi.azurewebsites.net/api/Monitoring/getSites",
+      "api_key": ""
+    },
+    "prod_sitelist": {
+      "api_url": "https://imbapi.azurewebsites.net/api/Monitoring/getSites",
+      "api_key": ""
+    },
+    "dev_monitoring": {
+      "api_url": "https://imbapi.azurewebsites.net/api/Monitoring/getMonitoring?siteId=",
+      "api_key": "dev_api_key_monitoring"
+    },
+    "prod_monitoring": {
+      "api_url": "https://imbapi.azurewebsites.net/api/Monitoring/getMonitoring?siteId=",
+      "api_key": "prod_api_key_monitoring"
+    },
+    "dev_anagrafica": {
+      "api_url": "https://imbapi.azurewebsites.net/api/Monitoring/getSite?siteId=",
+      "api_key": ""
+    },
+    "prod_anagrafica": {
+      "api_url": "https://imbapi.azurewebsites.net/api/Monitoring/getSite?siteId=",
+      "api_key": ""
+    }
+  }
+  

@@ -1,0 +1,196 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+#anagrafica{cursor: pointer;}  
+#monitoring{cursor: pointer;}  
+
+.card-body.close {
+  display:none;
+}
+
+</style>
+{% endblock stylesheets %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card" id="anagrafica">
+      <div class="card-header card-header-primary" >
+        <h4 class="card-title">Anagrafica</h4>
+        <!--p class="card-category"> Here is a subtitle for this table</p-->
+      </div>
+      <div class="card-body" id="anagrafica_body">
+        <div class="table-responsive">
+          <table class="table">
+              <thead class=" text-primary">
+                  <tr>
+                      <th>Sito</th>
+                      <th>Latitudine</th>
+                      <th>Longitudine</th>
+                      <th>Nome</th>
+                      <th>Indirizzo</th>
+                      <th>Città</th>
+                      <th>Cap</th>
+                      <th>Pod</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  
+                  <tr>
+                      <td>{{ anagrafica.sito }}</td>
+                      <td>{{ anagrafica.lat }}</td>
+                      <td>{{ anagrafica.long }}</td>
+                      <td>{{ anagrafica.nome }}</td>
+                      <td>{{ anagrafica.indirizzo }}</td>
+                      <td>{{ anagrafica.citta }}</td>
+                      <td>{{ anagrafica.latitudine }}</td>
+                      <td>{{ anagrafica.latitudine }}</td>
+                      <td>{{ anagrafica.longitudine }}</td>
+                      <td>{{ anagrafica.pod }}</td>
+                      <td>{{ anagrafica.siteId }}</td>
+                  </tr>
+                  
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title ">Chart</h4>
+        <p class="card-category"> Here is a subtitle for this chart</p>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <canvas id="grafico"></canvas>
+
+          <script>
+              document.addEventListener('DOMContentLoaded', function() {
+                  var dati = {{ dati|safe }};
+                  var labels = dati.map(function (entry) {
+                      return entry.time;
+                  });
+
+                  var effettivoData = dati.map(function (entry) {
+                      return entry.effettivo;
+                  });
+
+                  var forecastData = dati.map(function (entry) {
+                      return entry.forecast;
+                  });
+
+                  var ctx = document.getElementById('grafico').getContext('2d');
+                  var myChart = new Chart(ctx, {
+                      type: 'line',
+                      data: {
+                          labels: labels,
+                          datasets: [{
+                              label: 'Effettivo Wh',
+                              data: effettivoData,
+                              borderColor: 'rgba(75, 192, 192, 1)',
+                              borderWidth: 1,
+                              fill: false
+                          }, {
+                              label: 'Forecast Wh',
+                              data: forecastData,
+                              borderColor: 'rgba(255, 99, 132, 1)',
+                              borderWidth: 1,
+                              fill: false
+                          }]
+                      },
+                      options: {
+                          scales: {
+                              x: [{ type: 'time', time: { unit: 'day' } }],
+                              y: [{ type: 'linear', position: 'left' }]
+                          }
+                      }
+                  });
+              });
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+      <div class="card" id="monitoring">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">Monitoring</h4>
+          <div id="monitoring_apri_body">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5M8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6"/>
+            </svg>
+          </div>
+          <div id="monitoring_chiudi_body" style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-up" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 10a.5.5 0 0 0 .5-.5V3.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 3.707V9.5a.5.5 0 0 0 .5.5m-7 2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5"/>
+            </svg>
+          </div>
+          <!--p class="card-category"> Here is a subtitle for this table</p-->
+        </div>
+        <div class="card-body" id="monitoring_body" style="display: none;">
+          <div class="table-responsive">
+            <table class="table">
+                <thead class=" text-primary">
+                    <tr>
+                        <th>Time</th>
+                        <th>Effettivo</th>
+                        <th>Forecast</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in dati %}
+                    <tr>
+                        <td>{{ entry.time }}</td>
+                        <td>{{ entry.effettivo }} Wh</td>
+                        <td>{{ entry.forecast }} Wh</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var anagrafica = document.getElementById('anagrafica');
+    var anagrafica_body = document.getElementById('anagrafica_body');
+
+    var monitoring = document.getElementById('monitoring');
+    var monitoring_body = document.getElementById('monitoring_body');
+    var flag="close";
+
+    monitoring.addEventListener('click', function() {
+        // Cambia la classe per attivare/disattivare l'animazione
+        if(flag=="open"){
+          flag="close";
+          monitoring_body.setAttribute('style','display:none;');
+          document.getElementById('monitoring_chiudi_body').setAttribute('style','display:none;')
+          document.getElementById('monitoring_apri_body').setAttribute('style','display:inline;')
+        } else{
+          flag="open";
+          monitoring_body.setAttribute('style','display:inline;');
+          document.getElementById('monitoring_chiudi_body').setAttribute('style','display:inline;')
+          document.getElementById('monitoring_apri_body').setAttribute('style','display:none;')
+        }
+    });
+  });
+  </script>
+{% endblock javascripts %}

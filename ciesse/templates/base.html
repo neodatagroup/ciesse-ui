@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Il tuo Titolo di Default{% endblock %}</title>
+    <!-- Altri tag meta, link al foglio di stile, ecc. possono andare qui -->
+    <link rel="stylesheet" href="{% static 'ciesse/bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+
+    <nav>
+        <!-- Barra di navigazione -->
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about/">About</a></li>
+            <!-- Altri elementi del menu possono andare qui -->
+        </ul>
+    </nav>
+
+    <div id="content">
+        <!-- Il blocco del contenuto verrà riempito dai template figlio -->
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <!-- Piè di pagina -->
+        <p>&copy; 2023 Il tuo Nome</p>
+    </footer>
+
+    <script src="{% static 'ciesse/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>
